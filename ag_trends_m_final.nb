@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[   2098852,      44363]
-NotebookOptionsPosition[   2082036,      44079]
-NotebookOutlinePosition[   2082394,      44095]
-CellTagsIndexPosition[   2082351,      44092]
+NotebookDataLength[   2184053,      46476]
+NotebookOptionsPosition[   2165196,      46162]
+NotebookOutlinePosition[   2165560,      46178]
+CellTagsIndexPosition[   2165517,      46175]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -38781,6 +38781,2088 @@ Cell[BoxData[
 
 Cell[CellGroupData[{
 
+Cell["Figure 5: data compilation", "Section",
+ CellChangeTimes->{{3.7601054873457937`*^9, 3.760105488737158*^9}, {
+  3.76012467734968*^9, 3.7601246801680803`*^9}},
+ Background->RGBColor[
+  1, 0.5, 0],ExpressionUUID->"4c65266c-49a2-4f9e-8107-4d4149e1686c"],
+
+Cell[CellGroupData[{
+
+Cell["Sum of high and low scores", "Subsection",
+ CellChangeTimes->{{3.760183367357442*^9, 3.760183385530837*^9}, {
+  3.760183430745124*^9, 3.760183441690381*^9}},
+ Background->RGBColor[
+  1, 1, 0.85],ExpressionUUID->"6c2508d7-637f-4aac-bd25-e4f825fc9361"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+    "score", " ", "each", " ", "variable", " ", "with", " ", "1", " ", "if", 
+     " ", "it", " ", "is", " ", "below", " ", "th", " ", "10", "%", " ", 
+     "quantile", " ", "and", " ", "or", " ", "above", " ", "the", " ", "90", 
+     "%", " ", "quantile"}], ",", "  ", 
+    RowBox[{
+    "the", " ", "sum", " ", "of", " ", "the", " ", "scores", " ", "is", " ", 
+     "calculated", " ", "to", " ", "see", " ", "with", " ", "counties", " ", 
+     "are", " ", "the", " ", "worst", " ", "and", " ", "the", " ", "best"}]}],
+    " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"On", "[", "Assert", "]"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"allFIPS", " ", "=", " ", 
+     RowBox[{"{", "}"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Do", "[", "\[IndentingNewLine]", 
+     RowBox[{"(*", " ", 
+      RowBox[{
+       RowBox[{"combine", " ", "all", " ", 
+        RowBox[{"variables", ":", " ", "slope"}]}], ",", " ", 
+       RowBox[{"acceleration", "/", "deceleration"}], ",", " ", 
+       RowBox[{"scaled", " ", "residuals"}], ",", " ", 
+       RowBox[{
+        RowBox[{"yield", " ", "gap", " ", "for", " ", "2008"}], "-", 
+        "2017"}]}], " ", "*)"}], "\[IndentingNewLine]", " ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"dat1", " ", "=", " ", 
+        RowBox[{
+         RowBox[{"Import", "[", 
+          RowBox[{
+          "\"\</Users/gola/Box Sync/projects/ACES_ag_trends/data/clean/clean_\
+\>\"", "<>", 
+           RowBox[{"NAME", "[", 
+            RowBox[{"[", "i", "]"}], "]"}], "<>", "\"\<_fit_coeff.csv\>\""}], 
+          "]"}], "[", 
+         RowBox[{"[", 
+          RowBox[{
+           RowBox[{"2", ";;", 
+            RowBox[{"-", "2"}]}], ",", 
+           RowBox[{"{", 
+            RowBox[{"1", ",", "3", ",", "5", ",", "9"}], "}"}]}], "]"}], 
+         "]"}]}], ";", " ", "\[IndentingNewLine]", 
+       RowBox[{"dat2", " ", "=", " ", 
+        RowBox[{
+         RowBox[{"Import", "[", 
+          RowBox[{
+          "\"\</Users/gola/Box Sync/projects/ACES_ag_trends/data/clean/clean_\
+\>\"", "<>", 
+           RowBox[{"NAME", "[", 
+            RowBox[{"[", "i", "]"}], "]"}], "<>", "\"\<_ygap.csv\>\""}], 
+          "]"}], "[", 
+         RowBox[{"[", 
+          RowBox[{
+           RowBox[{"2", ";;", 
+            RowBox[{"-", "2"}]}], ",", 
+           RowBox[{"{", 
+            RowBox[{"1", ",", "6"}], "}"}]}], "]"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"temp", " ", "=", " ", 
+        RowBox[{
+         RowBox[{"Import", "[", 
+          RowBox[{
+          "\"\</Users/gola/Box Sync/projects/ACES_ag_trends/data/clean/clean_\
+\>\"", "<>", 
+           RowBox[{"NAME", "[", 
+            RowBox[{"[", "i", "]"}], "]"}], "<>", "\"\<.csv\>\""}], "]"}], 
+         "[", 
+         RowBox[{"[", 
+          RowBox[{
+           RowBox[{"2", ";;"}], ",", 
+           RowBox[{
+            RowBox[{"-", "10"}], ";;"}]}], "]"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"temp2", "=", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Cases", "[", 
+           RowBox[{"#", ",", "_Real"}], "]"}], "&"}], "/@", "temp"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"dat3", " ", "=", 
+        RowBox[{"Partition", "[", " ", 
+         RowBox[{
+          RowBox[{"Mean", " ", "/@", " ", "temp2"}], ",", "1"}], "]"}]}], ";",
+        "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"Assert", "[", 
+        RowBox[{
+         RowBox[{"Length", "@", "dat3"}], " ", "\[Equal]", " ", 
+         RowBox[{"Length", "@", "dat1"}]}], "]"}], ";", "\[IndentingNewLine]",
+        "\[IndentingNewLine]", 
+       RowBox[{"dat4", " ", "=", " ", 
+        RowBox[{"Join", "[", 
+         RowBox[{"dat1", ",", 
+          RowBox[{"dat2", "[", 
+           RowBox[{"[", 
+            RowBox[{"All", ",", 
+             RowBox[{"{", 
+              RowBox[{"-", "1"}], "}"}]}], "]"}], "]"}], ",", "2"}], "]"}]}], 
+       ";", "\[IndentingNewLine]", 
+       RowBox[{"dat4", " ", "=", " ", 
+        RowBox[{"Join", "[", 
+         RowBox[{"dat4", ",", "dat3", ",", "2"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
+        RowBox[{
+        "calculating", " ", "the", " ", "0.1", " ", "and", " ", "0.9", " ", 
+         "quantile", " ", "for", " ", "each", " ", "variable"}], " ", "*)"}], 
+       "\[IndentingNewLine]", 
+       RowBox[{"minq", " ", "=", " ", 
+        RowBox[{"maxq", " ", "=", " ", 
+         RowBox[{"{", "}"}]}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"Do", "[", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"dd", " ", "=", 
+           RowBox[{"Cases", "[", 
+            RowBox[{
+             RowBox[{"dat4", "[", 
+              RowBox[{"[", 
+               RowBox[{"All", ",", "i"}], "]"}], "]"}], ",", "_Real"}], 
+            "]"}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{"AppendTo", "[", 
+           RowBox[{"minq", ",", " ", 
+            RowBox[{"Quantile", "[", 
+             RowBox[{"dd", ",", "0.1"}], "]"}]}], "]"}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"AppendTo", "[", 
+           RowBox[{"maxq", " ", ",", " ", 
+            RowBox[{"Quantile", "[", 
+             RowBox[{"dd", ",", "0.9"}], "]"}]}], "]"}], ";"}], 
+         "\[IndentingNewLine]", ",", 
+         RowBox[{"{", 
+          RowBox[{"i", ",", "2", ",", "6"}], "}"}]}], "]"}], ";", 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"newd", " ", "=", " ", 
+        RowBox[{"dat4", "[", 
+         RowBox[{"[", 
+          RowBox[{"All", ",", 
+           RowBox[{"{", "1", "}"}]}], "]"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"AppendTo", "[", 
+        RowBox[{"allFIPS", ",", " ", "newd"}], "]"}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"Do", "[", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"vect", " ", "=", " ", 
+           RowBox[{"dat4", "[", 
+            RowBox[{"[", 
+             RowBox[{"i", ",", 
+              RowBox[{"2", ";;"}]}], "]"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"(*", 
+           RowBox[{
+           "calculate", " ", "the", " ", "score", " ", "for", " ", "counties",
+             " ", "that", " ", "are", " ", "less", " ", "than", " ", "the", 
+            " ", "0.05", " ", "quantile"}], " ", "*)"}], 
+          "\[IndentingNewLine]", 
+          RowBox[{"resl", " ", "=", 
+           RowBox[{"ConstantArray", "[", 
+            RowBox[{"0", ",", "5"}], "]"}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"resl", "[", 
+            RowBox[{"[", "1", "]"}], "]"}], " ", "=", "  ", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"NumericQ", "[", 
+                RowBox[{"vect", "[", 
+                 RowBox[{"[", "1", "]"}], "]"}], "]"}], "\[Equal]", "True"}], 
+              " ", "&&", " ", 
+              RowBox[{
+               RowBox[{"vect", "[", 
+                RowBox[{"[", "1", "]"}], "]"}], " ", "\[LessEqual]", "  ", 
+               RowBox[{"minq", "[", 
+                RowBox[{"[", "1", "]"}], "]"}]}]}], ",", 
+             RowBox[{"-", "1"}]}], "]"}]}], ";", 
+          RowBox[{"(*", " ", 
+           RowBox[{"rate", " ", "of", " ", "increase"}], " ", "*)"}], 
+          "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"resl", "[", 
+            RowBox[{"[", "2", "]"}], "]"}], " ", "=", "  ", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"NumericQ", "[", 
+                RowBox[{"vect", "[", 
+                 RowBox[{"[", "2", "]"}], "]"}], "]"}], "\[Equal]", "True"}], 
+              " ", "&&", 
+              RowBox[{
+               RowBox[{"vect", "[", 
+                RowBox[{"[", "2", "]"}], "]"}], " ", "\[LessEqual]", "  ", 
+               RowBox[{"minq", "[", 
+                RowBox[{"[", "2", "]"}], "]"}]}]}], ",", 
+             RowBox[{"-", "1"}]}], "]"}]}], ";", " ", 
+          RowBox[{"(*", " ", 
+           RowBox[{"acceleration", " ", "or", " ", "deceleration"}], " ", 
+           "*)"}], "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"resl", "[", 
+            RowBox[{"[", "3", "]"}], "]"}], " ", "=", "  ", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"NumericQ", "[", 
+                RowBox[{"vect", "[", 
+                 RowBox[{"[", "3", "]"}], "]"}], "]"}], "\[Equal]", "True"}], 
+              " ", "&&", " ", 
+              RowBox[{
+               RowBox[{"vect", "[", 
+                RowBox[{"[", "3", "]"}], "]"}], "\[GreaterEqual]", "   ", 
+               RowBox[{"maxq", "[", 
+                RowBox[{"[", "3", "]"}], "]"}]}]}], ",", 
+             RowBox[{"-", "1"}]}], "]"}]}], ";", " ", 
+          RowBox[{"(*", " ", 
+           RowBox[{"variability", ",", " ", 
+            RowBox[{"\[GreaterEqual]", "  ", 
+             RowBox[{
+             "max", " ", "used", " ", "since", " ", "high", " ", "is", " ", 
+              "bad"}]}]}], " ", "*)"}], "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"resl", "[", 
+            RowBox[{"[", "4", "]"}], "]"}], " ", "=", "  ", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"NumericQ", "[", 
+                RowBox[{"vect", "[", 
+                 RowBox[{"[", "4", "]"}], "]"}], "]"}], "\[Equal]", "True"}], 
+              " ", "&&", " ", 
+              RowBox[{
+               RowBox[{"vect", "[", 
+                RowBox[{"[", "4", "]"}], "]"}], "\[LessEqual]", "  ", 
+               RowBox[{"minq", "[", 
+                RowBox[{"[", "4", "]"}], "]"}]}]}], ",", 
+             RowBox[{"-", "1"}]}], "]"}]}], ";", 
+          RowBox[{"(*", " ", 
+           RowBox[{"yield", " ", "gap"}], " ", "*)"}], "\[IndentingNewLine]", 
+          
+          RowBox[{
+           RowBox[{"resl", "[", 
+            RowBox[{"[", "5", "]"}], "]"}], " ", "=", "  ", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"NumericQ", "[", 
+                RowBox[{"vect", "[", 
+                 RowBox[{"[", "5", "]"}], "]"}], "]"}], "\[Equal]", "True"}], 
+              " ", "&&", " ", 
+              RowBox[{
+               RowBox[{"vect", "[", 
+                RowBox[{"[", "5", "]"}], "]"}], "\[LessEqual]", "  ", 
+               RowBox[{"minq", "[", 
+                RowBox[{"[", "5", "]"}], "]"}]}]}], ",", 
+             RowBox[{"-", "1"}]}], "]"}]}], ";", " ", 
+          RowBox[{"(*", " ", 
+           RowBox[{
+            RowBox[{"mean", " ", "yield", " ", "during", " ", "2008"}], "-", 
+            "2017"}], " ", "*)"}], "\[IndentingNewLine]", 
+          "\[IndentingNewLine]", "\[IndentingNewLine]", 
+          RowBox[{"(*", 
+           RowBox[{
+           "calculate", " ", "the", " ", "score", " ", "for", " ", "counties",
+             " ", "that", " ", "are", " ", "more", " ", "than", " ", "the", 
+            " ", "0.95", " ", "quantile"}], " ", "*)"}], 
+          "\[IndentingNewLine]", 
+          RowBox[{"resm", " ", "=", 
+           RowBox[{"ConstantArray", "[", 
+            RowBox[{"0", ",", "5"}], "]"}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"resm", "[", 
+            RowBox[{"[", "1", "]"}], "]"}], " ", "=", "  ", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"NumericQ", "[", 
+                RowBox[{"vect", "[", 
+                 RowBox[{"[", "1", "]"}], "]"}], "]"}], "\[Equal]", "True"}], 
+              " ", "&&", " ", 
+              RowBox[{
+               RowBox[{"vect", "[", 
+                RowBox[{"[", "1", "]"}], "]"}], " ", "\[GreaterEqual]", "   ", 
+               RowBox[{"maxq", "[", 
+                RowBox[{"[", "1", "]"}], "]"}]}]}], ",", "1"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"resm", "[", 
+            RowBox[{"[", "2", "]"}], "]"}], " ", "=", "  ", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"NumericQ", "[", 
+                RowBox[{"vect", "[", 
+                 RowBox[{"[", "2", "]"}], "]"}], "]"}], "\[Equal]", "True"}], 
+              " ", "&&", " ", 
+              RowBox[{
+               RowBox[{"vect", "[", 
+                RowBox[{"[", "2", "]"}], "]"}], " ", "\[GreaterEqual]", "  ", 
+               
+               RowBox[{"maxq", "[", 
+                RowBox[{"[", "2", "]"}], "]"}]}]}], ",", "1"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"resm", "[", 
+            RowBox[{"[", "3", "]"}], "]"}], " ", "=", "  ", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"NumericQ", "[", 
+                RowBox[{"vect", "[", 
+                 RowBox[{"[", "3", "]"}], "]"}], "]"}], "\[Equal]", "True"}], 
+              " ", "&&", " ", 
+              RowBox[{
+               RowBox[{"vect", "[", 
+                RowBox[{"[", "3", "]"}], "]"}], " ", "\[LessEqual]", "  ", 
+               RowBox[{"minq", "[", 
+                RowBox[{"[", "3", "]"}], "]"}]}]}], ",", "1"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"resm", "[", 
+            RowBox[{"[", "4", "]"}], "]"}], " ", "=", "  ", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"NumericQ", "[", 
+                RowBox[{"vect", "[", 
+                 RowBox[{"[", "4", "]"}], "]"}], "]"}], "\[Equal]", "True"}], 
+              " ", "&&", " ", 
+              RowBox[{
+               RowBox[{"vect", "[", 
+                RowBox[{"[", "4", "]"}], "]"}], "\[GreaterEqual]", "  ", 
+               RowBox[{"maxq", "[", 
+                RowBox[{"[", "4", "]"}], "]"}]}]}], ",", "1"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"resm", "[", 
+            RowBox[{"[", "5", "]"}], "]"}], " ", "=", "  ", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"NumericQ", "[", 
+                RowBox[{"vect", "[", 
+                 RowBox[{"[", "5", "]"}], "]"}], "]"}], "\[Equal]", "True"}], 
+              " ", "&&", " ", 
+              RowBox[{
+               RowBox[{"vect", "[", 
+                RowBox[{"[", "5", "]"}], "]"}], "\[GreaterEqual]", "  ", 
+               RowBox[{"maxq", "[", 
+                RowBox[{"[", "5", "]"}], "]"}]}]}], ",", "1"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", "\[IndentingNewLine]", 
+          RowBox[{"score1", "=", " ", 
+           RowBox[{"Total", "[", 
+            RowBox[{"Cases", "[", 
+             RowBox[{
+              RowBox[{"Flatten", "[", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"resl", "[", 
+                  RowBox[{"[", 
+                   RowBox[{"{", 
+                    RowBox[{"1", ",", "2", ",", "4"}], "}"}], "]"}], "]"}], 
+                 ",", 
+                 RowBox[{"resm", "[", 
+                  RowBox[{"[", 
+                   RowBox[{"{", 
+                    RowBox[{"1", ",", "2", ",", "4"}], "}"}], "]"}], "]"}]}], 
+                "}"}], "]"}], ",", "_Integer"}], "]"}], "]"}]}], ";", " ", 
+          RowBox[{"(*", 
+           RowBox[{
+            RowBox[{"no", " ", "acc", " ", "and", " ", "dec"}], ",", " ", 
+            RowBox[{"no", " ", "mean", " ", "yield"}]}], "*)"}], 
+          "\[IndentingNewLine]", 
+          RowBox[{"score2", "=", " ", 
+           RowBox[{"Total", "[", 
+            RowBox[{"Cases", "[", 
+             RowBox[{
+              RowBox[{"Flatten", "[", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"resl", "[", 
+                  RowBox[{"[", 
+                   RowBox[{"{", 
+                    RowBox[{"1", ",", "2", ",", "4", ",", "5"}], "}"}], "]"}],
+                   "]"}], ",", 
+                 RowBox[{"resm", "[", 
+                  RowBox[{"[", 
+                   RowBox[{"{", 
+                    RowBox[{"1", ",", "2", ",", "4", ",", "5"}], "}"}], "]"}],
+                   "]"}]}], "}"}], "]"}], ",", "_Integer"}], "]"}], "]"}]}], 
+          ";", " ", 
+          RowBox[{"(*", " ", 
+           RowBox[{"no", " ", "mean", " ", "yield"}], " ", "*)"}], 
+          "\[IndentingNewLine]", 
+          RowBox[{"score3", "=", " ", 
+           RowBox[{"Total", "[", 
+            RowBox[{"Cases", "[", 
+             RowBox[{
+              RowBox[{"Flatten", "[", 
+               RowBox[{"{", 
+                RowBox[{"resl", ",", "resm"}], "}"}], "]"}], ",", 
+              "_Integer"}], "]"}], "]"}]}], ";", " ", 
+          RowBox[{"(*", " ", 
+           RowBox[{"all", " ", "five", " ", "variables", " ", "included"}], 
+           " ", "*)"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+          RowBox[{"AppendTo", "[", 
+           RowBox[{
+            RowBox[{"newd", "[", 
+             RowBox[{"[", "i", "]"}], "]"}], ",", "score1"}], "]"}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"AppendTo", "[", 
+           RowBox[{
+            RowBox[{"newd", "[", 
+             RowBox[{"[", "i", "]"}], "]"}], ",", "score2"}], "]"}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"AppendTo", "[", 
+           RowBox[{
+            RowBox[{"newd", "[", 
+             RowBox[{"[", "i", "]"}], "]"}], ",", "score3"}], "]"}], ";"}], 
+         "\[IndentingNewLine]", "\[IndentingNewLine]", ",", 
+         RowBox[{"{", 
+          RowBox[{"i", ",", " ", 
+           RowBox[{"Length", "@", "dat4"}]}], "}"}]}], "]"}], ";", 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"PrependTo", "[", 
+        RowBox[{"newd", ",", 
+         RowBox[{"{", 
+          RowBox[{
+          "\"\<FIPS\>\"", ",", "\"\<3vars\>\"", ",", "\"\<4vars\>\"", ",", 
+           "\"\<5vars\>\""}], "}"}]}], "]"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"Export", "[", 
+        RowBox[{
+         RowBox[{
+         "\"\</Users/gola/Box \
+Sync/projects/ACES_ag_trends/data/clean/clean_\>\"", "<>", 
+          RowBox[{"NAME", "[", 
+           RowBox[{"[", "i", "]"}], "]"}], "<>", "\"\<_sumscore.csv\>\""}], 
+         ",", "newd"}], "]"}], ";"}], " ", "\[IndentingNewLine]", ",", 
+      RowBox[{"{", 
+       RowBox[{"i", ",", 
+        RowBox[{"Length", "@", "NAME"}]}], "}"}]}], "]"}], ";"}]}]}]], "Input",\
+
+ CellChangeTimes->{{3.760123627060195*^9, 3.7601236682306433`*^9}, {
+   3.760123915628693*^9, 3.76012391907045*^9}, {3.760123960502987*^9, 
+   3.7601239970849524`*^9}, {3.7601245994171667`*^9, 3.760124608431621*^9}, {
+   3.760124660048367*^9, 3.760124660486753*^9}, {3.760132021974144*^9, 
+   3.760132087265896*^9}, {3.7601334014672127`*^9, 3.760133433337716*^9}, {
+   3.760133511662588*^9, 3.7601336532721453`*^9}, {3.760133747556937*^9, 
+   3.760133752763249*^9}, {3.760133808015789*^9, 3.760133892090963*^9}, {
+   3.760134133547961*^9, 3.760134150322792*^9}, {3.7601463381184187`*^9, 
+   3.76014661056439*^9}, {3.760146686043971*^9, 3.7601466984417562`*^9}, {
+   3.760146763013785*^9, 3.7601468317632627`*^9}, {3.7601834639602823`*^9, 
+   3.7601835360905523`*^9}, {3.760184693227913*^9, 3.760184707102413*^9}, {
+   3.760184792537722*^9, 3.760184987248352*^9}, {3.7601851375427094`*^9, 
+   3.7601851709458933`*^9}, {3.76018535363936*^9, 3.7601853679464903`*^9}, {
+   3.760185460737442*^9, 3.760185463823859*^9}, {3.7601855457536983`*^9, 
+   3.7601856409396963`*^9}, {3.76046755369495*^9, 3.760467592070691*^9}, {
+   3.760468013207971*^9, 3.760468133747506*^9}, {3.760468168481649*^9, 
+   3.760468377495316*^9}, {3.760468426578466*^9, 3.7604685045651293`*^9}, {
+   3.760468595572658*^9, 3.760468603404028*^9}, 3.760468651272996*^9, {
+   3.76081122050666*^9, 3.76081123261446*^9}, {3.760811641943336*^9, 
+   3.760811648634204*^9}},ExpressionUUID->"bc341ab4-5026-41e8-805f-\
+d92c34b42970"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"compile", " ", "the", " ", "score", " ", "data"}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"allFIPS", " ", "=", " ", 
+     RowBox[{"Union", "[", 
+      RowBox[{"Flatten", "@", "allFIPS"}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"scoresum1", " ", "=", " ", 
+     RowBox[{"scoresum2", " ", "=", " ", 
+      RowBox[{"scoresum3", " ", "=", " ", 
+       RowBox[{"ConstantArray", "[", 
+        RowBox[{"\"\<NA\>\"", ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"Length", "@", "allFIPS"}], ",", "10"}], "}"}]}], 
+        "]"}]}]}]}], ";"}], " ", 
+   RowBox[{"(*", 
+    RowBox[{"scoresumMY", ",", " ", 
+     RowBox[{"MY", " ", "is", " ", "for", " ", "mean", " ", "yield"}]}], " ", 
+    "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"scoresum1", "[", 
+      RowBox[{"[", 
+       RowBox[{"All", ",", "1"}], "]"}], "]"}], " ", "=", " ", 
+     RowBox[{
+      RowBox[{"scoresum2", "[", 
+       RowBox[{"[", 
+        RowBox[{"All", ",", "1"}], "]"}], "]"}], " ", "=", " ", 
+      RowBox[{
+       RowBox[{"scoresum3", "[", 
+        RowBox[{"[", 
+         RowBox[{"All", ",", "1"}], "]"}], "]"}], "=", " ", "allFIPS"}]}]}], 
+    ";"}], " ", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Do", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"dat", " ", "=", " ", 
+        RowBox[{
+         RowBox[{"Import", "[", 
+          RowBox[{
+          "\"\</Users/gola/Box Sync/projects/ACES_ag_trends/data/clean/clean_\
+\>\"", "<>", 
+           RowBox[{"NAME", "[", 
+            RowBox[{"[", "i", "]"}], "]"}], "<>", "\"\<_sumscore.csv\>\""}], 
+          "]"}], "[", 
+         RowBox[{"[", 
+          RowBox[{"2", ";;"}], "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"Do", "[", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"fips", " ", "=", " ", 
+           RowBox[{"dat", "[", 
+            RowBox[{"[", 
+             RowBox[{"j", ",", "1"}], "]"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"pos", " ", "=", " ", 
+           RowBox[{
+            RowBox[{"Position", "[", 
+             RowBox[{"allFIPS", ",", "fips"}], "]"}], "[", 
+            RowBox[{"[", 
+             RowBox[{"1", ",", "1"}], "]"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"scoresum1", "[", 
+            RowBox[{"[", 
+             RowBox[{"pos", ",", 
+              RowBox[{"i", "+", "1"}]}], "]"}], "]"}], "=", " ", 
+           RowBox[{"dat", "[", 
+            RowBox[{"[", 
+             RowBox[{"j", ",", "2"}], "]"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"scoresum2", "[", 
+            RowBox[{"[", 
+             RowBox[{"pos", ",", 
+              RowBox[{"i", "+", "1"}]}], "]"}], "]"}], "=", " ", 
+           RowBox[{"dat", "[", 
+            RowBox[{"[", 
+             RowBox[{"j", ",", "3"}], "]"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"scoresum3", "[", 
+            RowBox[{"[", 
+             RowBox[{"pos", ",", 
+              RowBox[{"i", "+", "1"}]}], "]"}], "]"}], "=", " ", 
+           RowBox[{"dat", "[", 
+            RowBox[{"[", 
+             RowBox[{"j", ",", "4"}], "]"}], "]"}]}], ";"}], 
+         "\[IndentingNewLine]", ",", 
+         RowBox[{"{", 
+          RowBox[{"j", ",", 
+           RowBox[{"Length", "@", "dat"}]}], "}"}]}], "]"}], ";"}], 
+      "\[IndentingNewLine]", ",", 
+      RowBox[{"{", 
+       RowBox[{"i", ",", 
+        RowBox[{"Length", "@", "NAME"}]}], "}"}]}], "]"}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"PrependTo", "[", 
+     RowBox[{"scoresum1", ",", 
+      RowBox[{"Flatten", "[", 
+       RowBox[{"{", 
+        RowBox[{"\"\<FIPS\>\"", ",", "NAME"}], "}"}], "]"}]}], "]"}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"PrependTo", "[", 
+     RowBox[{"scoresum2", ",", 
+      RowBox[{"Flatten", "[", 
+       RowBox[{"{", 
+        RowBox[{"\"\<FIPS\>\"", ",", "NAME"}], "}"}], "]"}]}], "]"}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"PrependTo", "[", 
+     RowBox[{"scoresum3", ",", 
+      RowBox[{"Flatten", "[", 
+       RowBox[{"{", 
+        RowBox[{"\"\<FIPS\>\"", ",", "NAME"}], "}"}], "]"}]}], "]"}], 
+    ";"}]}]}]], "Input",
+ CellChangeTimes->{{3.760133903181168*^9, 3.760133920236627*^9}, {
+   3.760134117746385*^9, 3.76013445411808*^9}, {3.760134486390259*^9, 
+   3.760134558770756*^9}, {3.7601345993115664`*^9, 3.760134605724264*^9}, 
+   3.760134657443643*^9, {3.7601346956188717`*^9, 3.7601347308454037`*^9}, {
+   3.760134761775076*^9, 3.760134847044615*^9}, {3.760183539645056*^9, 
+   3.760183573951573*^9}, {3.760185042951131*^9, 3.760185101078336*^9}, {
+   3.760468789444569*^9, 3.760468848203649*^9}, {3.760469092371736*^9, 
+   3.760469099381287*^9}, {3.7604710379013147`*^9, 
+   3.760471037986253*^9}},ExpressionUUID->"53089744-b471-40fe-8f06-\
+389fbb571d94"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Export", "[", 
+   RowBox[{
+   "\"\</Users/gola/Box \
+Sync/projects/ACES_ag_trends/data/clean/clean_sumscore1.csv\>\"", ",", 
+    "scoresum1"}], "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Export", "[", 
+   RowBox[{
+   "\"\</Users/gola/Box \
+Sync/projects/ACES_ag_trends/data/clean/clean_sumscore2.csv\>\"", ",", 
+    "scoresum2"}], "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Export", "[", 
+   RowBox[{
+   "\"\</Users/gola/Box \
+Sync/projects/ACES_ag_trends/data/clean/clean_sumscore3.csv\>\"", ",", 
+    "scoresum3"}], "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.7601349986752*^9, 3.760135021266964*^9}, {
+  3.760183584205776*^9, 3.7601835896078777`*^9}, {3.760185104584897*^9, 
+  3.760185106800392*^9}, {3.7604688136896467`*^9, 
+  3.760468827035945*^9}},ExpressionUUID->"2584bf49-4baa-4c23-a940-\
+0b192d2c0e40"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Recycle: Rank", "Subsection",
+ CellChangeTimes->{{3.760183411866321*^9, 3.7601834121465197`*^9}, {
+  3.7604676268891706`*^9, 3.760467630091031*^9}},
+ Background->RGBColor[
+  1, 1, 0.85],ExpressionUUID->"1cef12b4-98c1-4bc6-9d6c-e59c378c4edf"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"combine", " ", "all", " ", 
+     RowBox[{"variables", ":", " ", "slope"}]}], ",", "  ", 
+    RowBox[{"scaled", " ", "residuals"}], ",", " ", 
+    RowBox[{
+     RowBox[{"yield", " ", "gap", " ", "for", " ", "2008"}], "-", "2017"}]}], 
+   " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"Do", "[", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"dat1", " ", "=", " ", 
+       RowBox[{
+        RowBox[{"Import", "[", 
+         RowBox[{
+         "\"\</Users/gola/Box \
+Sync/projects/ACES_ag_trends/data/clean/clean_\>\"", "<>", 
+          RowBox[{"NAME", "[", 
+           RowBox[{"[", "ii", "]"}], "]"}], "<>", "\"\<_fit_coeff.csv\>\""}], 
+         "]"}], "[", 
+        RowBox[{"[", 
+         RowBox[{
+          RowBox[{"2", ";;", 
+           RowBox[{"-", "2"}]}], ",", 
+          RowBox[{"{", 
+           RowBox[{"1", ",", "5", ",", "9"}], "}"}]}], "]"}], "]"}]}], ";", 
+      " ", "\[IndentingNewLine]", 
+      RowBox[{"dat2", " ", "=", " ", 
+       RowBox[{
+        RowBox[{"Import", "[", 
+         RowBox[{
+         "\"\</Users/gola/Box \
+Sync/projects/ACES_ag_trends/data/clean/clean_\>\"", "<>", 
+          RowBox[{"NAME", "[", 
+           RowBox[{"[", "ii", "]"}], "]"}], "<>", "\"\<_ygap.csv\>\""}], 
+         "]"}], "[", 
+        RowBox[{"[", 
+         RowBox[{
+          RowBox[{"2", ";;", 
+           RowBox[{"-", "2"}]}], ",", 
+          RowBox[{"{", 
+           RowBox[{"1", ",", "6"}], "}"}]}], "]"}], "]"}]}], ";", " ", 
+      "\[IndentingNewLine]", 
+      RowBox[{"dat3", " ", "=", " ", 
+       RowBox[{"Join", "[", 
+        RowBox[{"dat1", ",", 
+         RowBox[{"dat2", "[", 
+          RowBox[{"[", 
+           RowBox[{"All", ",", 
+            RowBox[{"{", 
+             RowBox[{"-", "1"}], "}"}]}], "]"}], "]"}], ",", "2"}], "]"}]}], 
+      ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+      RowBox[{"newd", " ", "=", " ", "dat3"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"newd", " ", "=", " ", 
+       RowBox[{"Select", "[", 
+        RowBox[{"newd", ",", " ", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"NumericQ", "[", 
+            RowBox[{"Total", "[", "#", "]"}], "]"}], "\[Equal]", "True"}], 
+          "&"}]}], " ", "]"}]}], ";", "\[IndentingNewLine]", 
+      "\[IndentingNewLine]", 
+      RowBox[{"Do", "[", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"temp", " ", "=", " ", 
+          RowBox[{"SortBy", "[", 
+           RowBox[{
+            RowBox[{"newd", "[", 
+             RowBox[{"[", 
+              RowBox[{"All", ",", 
+               RowBox[{"{", 
+                RowBox[{"1", ",", "j"}], "}"}]}], "]"}], "]"}], ",", "Last"}],
+            "]"}]}], ";", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"temp", "[", 
+           RowBox[{"[", 
+            RowBox[{"All", ",", "2"}], "]"}], "]"}], "=", " ", 
+          RowBox[{"Round", "[", 
+           RowBox[{
+            RowBox[{"temp", "[", 
+             RowBox[{"[", 
+              RowBox[{"All", ",", "2"}], "]"}], "]"}], ",", "0.00001"}], 
+           "]"}]}], ";", 
+         RowBox[{"(*", " ", 
+          RowBox[{
+           RowBox[{
+           "for", " ", "wheat_unc", " ", "and", " ", "yield", " ", "gap"}], 
+           ",", " ", 
+           RowBox[{
+           "there", " ", "is", " ", "a", " ", "problem", " ", "of", " ", 
+            "numerical", " ", "precision"}], ",", " ", 
+           RowBox[{
+           "some", " ", "val", " ", "are", " ", "similar", " ", "at", " ", 
+            RowBox[{"10", "^", 
+             RowBox[{"-", "16"}]}]}], ",", " ", 
+           RowBox[{
+           "the", " ", "union", " ", "do", " ", "not", " ", "find", " ", 
+            "them", " ", "but", " ", "the", " ", "position", " ", "is", " ", 
+            "less", " ", "precise", " ", "resulting", " ", "in", " ", 
+            "multilple", " ", "finds"}], ",", " ", 
+           RowBox[{
+           "the", " ", "use", " ", "of", " ", "Round", " ", "chop", " ", 
+            "these", " ", "numerical", " ", "errors"}]}], " ", "*)"}], 
+         "\[IndentingNewLine]", 
+         RowBox[{"val", " ", "=", " ", 
+          RowBox[{"Union", "@", 
+           RowBox[{"temp", "[", 
+            RowBox[{"[", 
+             RowBox[{"All", ",", "2"}], "]"}], "]"}]}]}], ";", 
+         "\[IndentingNewLine]", 
+         RowBox[{"rank", " ", "=", " ", 
+          RowBox[{"{", "}"}]}], ";", "\[IndentingNewLine]", 
+         RowBox[{"Do", "[", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"vv", " ", "=", " ", 
+             RowBox[{"val", "[", 
+              RowBox[{"[", "i", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+            RowBox[{"(*", " ", 
+             RowBox[{
+             "the", " ", "next", " ", "two", " ", "lines", " ", "is", " ", 
+              "aimed", " ", "at", " ", "giving", " ", "the", " ", "same", " ",
+               "rank", " ", "to", " ", "same", " ", "values"}], " ", "*)"}], 
+            "\[IndentingNewLine]", 
+            RowBox[{"pos", " ", "=", " ", 
+             RowBox[{"Flatten", "[", 
+              RowBox[{"Position", "[", 
+               RowBox[{
+                RowBox[{"temp", "[", 
+                 RowBox[{"[", 
+                  RowBox[{"All", ",", "2"}], "]"}], "]"}], ",", "vv"}], "]"}],
+               "]"}]}], ";", "\[IndentingNewLine]", 
+            RowBox[{"rr", " ", "=", " ", 
+             RowBox[{"ConstantArray", "[", 
+              RowBox[{
+               RowBox[{"pos", "[", 
+                RowBox[{"[", "1", "]"}], "]"}], ",", 
+               RowBox[{"Length", "@", "pos"}]}], "]"}]}], ";", 
+            "\[IndentingNewLine]", 
+            RowBox[{"AppendTo", "[", 
+             RowBox[{"rank", ",", "rr"}], "]"}], ";"}], "\[IndentingNewLine]",
+            ",", 
+           RowBox[{"{", 
+            RowBox[{"i", ",", 
+             RowBox[{"Length", "@", "val"}]}], "}"}]}], "]"}], ";", 
+         "\[IndentingNewLine]", 
+         RowBox[{"rank", " ", "=", " ", 
+          RowBox[{"Flatten", "@", "rank"}]}], ";", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"temp", "[", 
+           RowBox[{"[", 
+            RowBox[{"All", ",", "2"}], "]"}], "]"}], "=", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{"j", "\[Equal]", "3"}], ",", 
+            RowBox[{
+             RowBox[{"Length", "@", "temp"}], "-", " ", "rank"}], ",", 
+            "rank"}], "]"}]}], ";", 
+         RowBox[{"(*", " ", 
+          RowBox[{
+           RowBox[{
+           "replace", " ", "the", " ", "ordered", " ", "actual", " ", 
+            "values", " ", "with", " ", "the", " ", "updated", " ", "ranks"}],
+            ",", " ", 
+           RowBox[{
+           "the", " ", "scaled", " ", "standard", " ", "deviation", " ", "is",
+             " ", "inversed", " ", "as", " ", "high", " ", "value", " ", 
+            "means", " ", "low", " ", "rank"}]}], " ", "*)"}], 
+         "\[IndentingNewLine]", "\[IndentingNewLine]", 
+         RowBox[{"Do", "[", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"fips", " ", "=", " ", 
+             RowBox[{"temp", "[", 
+              RowBox[{"[", 
+               RowBox[{"i", ",", "1"}], "]"}], "]"}]}], ";", 
+            "\[IndentingNewLine]", 
+            RowBox[{"pos", " ", "=", " ", 
+             RowBox[{
+              RowBox[{"Position", "[", 
+               RowBox[{
+                RowBox[{"newd", "[", 
+                 RowBox[{"[", 
+                  RowBox[{"All", ",", "1"}], "]"}], "]"}], ",", "fips"}], 
+               "]"}], "[", 
+              RowBox[{"[", 
+               RowBox[{"1", ",", "1"}], "]"}], "]"}]}], ";", 
+            "\[IndentingNewLine]", 
+            RowBox[{
+             RowBox[{"newd", "[", 
+              RowBox[{"[", 
+               RowBox[{"pos", ",", "j"}], "]"}], "]"}], "=", " ", 
+             RowBox[{"temp", "[", 
+              RowBox[{"[", 
+               RowBox[{"i", ",", "2"}], "]"}], "]"}]}], ";"}], " ", 
+           RowBox[{"(*", " ", 
+            RowBox[{
+            "replace", " ", "the", " ", "values", " ", "from", " ", "the", 
+             " ", "original", " ", "data", " ", "with", " ", "the", " ", 
+             "rank"}], " ", "*)"}], "\[IndentingNewLine]", ",", 
+           RowBox[{"{", 
+            RowBox[{"i", ",", 
+             RowBox[{"Length", "@", "temp"}]}], "}"}]}], "]"}], ";"}], 
+        "\[IndentingNewLine]", "\[IndentingNewLine]", ",", 
+        RowBox[{"{", 
+         RowBox[{"j", ",", 
+          RowBox[{"{", 
+           RowBox[{"2", ",", "3", ",", "4"}], "}"}]}], "}"}]}], "]"}], ";", 
+      "\n", "\n", 
+      RowBox[{"(*", " ", 
+       RowBox[{
+       "calculating", " ", "the", " ", "mean", " ", "rank", " ", "and", " ", 
+        "ranking", " ", "with", " ", "respect", " ", "to", " ", "mean", " ", 
+        "rank"}], " ", "*)"}], "\[IndentingNewLine]", 
+      RowBox[{"meanrank", " ", "=", " ", 
+       RowBox[{
+        RowBox[{"Map", "[", 
+         RowBox[{"Mean", ",", 
+          RowBox[{"newd", "[", 
+           RowBox[{"[", 
+            RowBox[{"All", ",", 
+             RowBox[{"2", ";;"}]}], "]"}], "]"}]}], "]"}], " ", "//", "N"}]}],
+       ";", "\[IndentingNewLine]", 
+      RowBox[{"nd", " ", "=", " ", 
+       RowBox[{"Transpose", "[", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"newd", "[", 
+           RowBox[{"[", 
+            RowBox[{"All", ",", "1"}], "]"}], "]"}], ",", "meanrank"}], "}"}],
+         "]"}]}], ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+      RowBox[{"(*", " ", 
+       RowBox[{
+       "the", " ", "same", " ", "algorithm", " ", "as", " ", "above", " ", 
+        "to", " ", "rank", " ", "with", " ", "potential", " ", "same", " ", 
+        "rank"}], " ", "*)"}], "\[IndentingNewLine]", 
+      RowBox[{"temp", " ", "=", " ", 
+       RowBox[{"SortBy", "[", 
+        RowBox[{"nd", ",", "Last"}], "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"val", " ", "=", " ", 
+       RowBox[{"Union", "[", 
+        RowBox[{"temp", "[", 
+         RowBox[{"[", 
+          RowBox[{"All", ",", "2"}], "]"}], "]"}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"rank", " ", "=", " ", 
+       RowBox[{"{", "}"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"Do", "[", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"vv", " ", "=", " ", 
+          RowBox[{"val", "[", 
+           RowBox[{"[", "i", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+         RowBox[{"(*", " ", 
+          RowBox[{
+          "the", " ", "next", " ", "two", " ", "lines", " ", "is", " ", 
+           "aimed", " ", "at", " ", "giving", " ", "the", " ", "same", " ", 
+           "rank", " ", "to", " ", "same", " ", "values"}], " ", "*)"}], 
+         "\[IndentingNewLine]", 
+         RowBox[{"pos", " ", "=", " ", 
+          RowBox[{"Flatten", "[", 
+           RowBox[{"Position", "[", 
+            RowBox[{
+             RowBox[{"temp", "[", 
+              RowBox[{"[", 
+               RowBox[{"All", ",", "2"}], "]"}], "]"}], ",", "vv"}], "]"}], 
+           "]"}]}], ";", "\[IndentingNewLine]", 
+         RowBox[{"rr", " ", "=", " ", 
+          RowBox[{"ConstantArray", "[", 
+           RowBox[{
+            RowBox[{"pos", "[", 
+             RowBox[{"[", "1", "]"}], "]"}], ",", 
+            RowBox[{"Length", "@", "pos"}]}], "]"}]}], ";", 
+         "\[IndentingNewLine]", 
+         RowBox[{"AppendTo", "[", 
+          RowBox[{"rank", ",", "rr"}], "]"}], ";"}], "\[IndentingNewLine]", 
+        ",", 
+        RowBox[{"{", 
+         RowBox[{"i", ",", 
+          RowBox[{"Length", "@", "val"}]}], "}"}]}], "]"}], ";", 
+      "\[IndentingNewLine]", "\[IndentingNewLine]", 
+      RowBox[{"rank", " ", "=", " ", 
+       RowBox[{"Flatten", "@", "rank"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"temp", "[", 
+        RowBox[{"[", 
+         RowBox[{"All", ",", "2"}], "]"}], "]"}], "=", "rank"}], ";", 
+      "\[IndentingNewLine]", "\[IndentingNewLine]", 
+      RowBox[{"Do", "[", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"fips", " ", "=", " ", 
+          RowBox[{"temp", "[", 
+           RowBox[{"[", 
+            RowBox[{"i", ",", "1"}], "]"}], "]"}]}], ";", 
+         "\[IndentingNewLine]", 
+         RowBox[{"pos", " ", "=", " ", 
+          RowBox[{
+           RowBox[{"Position", "[", 
+            RowBox[{
+             RowBox[{"nd", "[", 
+              RowBox[{"[", 
+               RowBox[{"All", ",", "1"}], "]"}], "]"}], ",", "fips"}], "]"}], 
+           "[", 
+           RowBox[{"[", 
+            RowBox[{"1", ",", "1"}], "]"}], "]"}]}], ";", 
+         "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"nd", "[", 
+           RowBox[{"[", 
+            RowBox[{"pos", ",", "2"}], "]"}], "]"}], "=", " ", 
+          RowBox[{"temp", "[", 
+           RowBox[{"[", 
+            RowBox[{"i", ",", "2"}], "]"}], "]"}]}], ";"}], " ", 
+        RowBox[{"(*", " ", 
+         RowBox[{
+         "replace", " ", "the", " ", "values", " ", "from", " ", "the", " ", 
+          "original", " ", "data", " ", "with", " ", "the", " ", "rank"}], 
+         " ", "*)"}], "\[IndentingNewLine]", ",", 
+        RowBox[{"{", 
+         RowBox[{"i", ",", 
+          RowBox[{"Length", "@", "temp"}]}], "}"}]}], "]"}], ";", 
+      "\[IndentingNewLine]", "\[IndentingNewLine]", 
+      RowBox[{"PrependTo", "[", 
+       RowBox[{"nd", ",", 
+        RowBox[{"{", 
+         RowBox[{"\"\<FIPS\>\"", ",", "\"\<meanrank\>\""}], "}"}]}], "]"}], 
+      ";", "\[IndentingNewLine]", 
+      RowBox[{"Export", "[", 
+       RowBox[{
+        RowBox[{
+        "\"\</Users/gola/Box Sync/projects/ACES_ag_trends/data/clean/clean_\>\
+\"", "<>", 
+         RowBox[{"NAME", "[", 
+          RowBox[{"[", "ii", "]"}], "]"}], "<>", "\"\<_rank.csv\>\""}], ",", 
+        "nd"}], "]"}], ";"}], " ", "\[IndentingNewLine]", 
+     "\[IndentingNewLine]", ",", 
+     RowBox[{"{", 
+      RowBox[{"ii", ",", " ", "9"}], "}"}]}], "]"}], 
+   "\[IndentingNewLine]"}]}]], "Input",
+ CellChangeTimes->{{3.760139332611163*^9, 3.760139334283414*^9}, {
+   3.760139793006976*^9, 3.760139800626953*^9}, {3.760139999084396*^9, 
+   3.760140007808173*^9}, {3.760141895042657*^9, 3.760141935822063*^9}, {
+   3.760145436238618*^9, 3.7601455043192253`*^9}, {3.760145550381778*^9, 
+   3.7601455759034653`*^9}, {3.760145609429637*^9, 3.7601456322062273`*^9}, {
+   3.760145693023069*^9, 3.760145698982997*^9}, {3.760145821038603*^9, 
+   3.760145960424477*^9}, {3.760147381019374*^9, 3.760147400082196*^9}, {
+   3.760147431254175*^9, 3.7601475347865953`*^9}, {3.760147654466642*^9, 
+   3.760147706306946*^9}, {3.7601477436399717`*^9, 3.760147743732751*^9}, {
+   3.760147913796473*^9, 3.760147913871099*^9}, {3.760148251065469*^9, 
+   3.760148358766326*^9}, {3.7601484051473427`*^9, 3.76014841632167*^9}, {
+   3.7601485476650543`*^9, 3.760148569577044*^9}, 3.760149697530829*^9, 
+   3.760173830634325*^9, {3.760175332620682*^9, 3.7601754939432383`*^9}, 
+   3.760175604536529*^9},ExpressionUUID->"676dbb3c-0a80-4b11-b5c6-\
+f8b0d65541c5"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"compile", " ", "the", " ", "rank", " ", "data"}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"allFIPS", " ", "=", " ", 
+     RowBox[{"Union", "[", 
+      RowBox[{"Flatten", "@", "allFIPS"}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"allrank", " ", "=", " ", 
+     RowBox[{"ConstantArray", "[", 
+      RowBox[{"\"\<NA\>\"", ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"Length", "@", "allFIPS"}], ",", "10"}], "}"}]}], "]"}]}], 
+    ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"allrank", "[", 
+      RowBox[{"[", 
+       RowBox[{"All", ",", "1"}], "]"}], "]"}], " ", "=", " ", "allFIPS"}], 
+    ";"}], " ", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Do", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"dat", " ", "=", " ", 
+        RowBox[{
+         RowBox[{"Import", "[", 
+          RowBox[{
+          "\"\</Users/gola/Box Sync/projects/ACES_ag_trends/data/clean/clean_\
+\>\"", "<>", 
+           RowBox[{"NAME", "[", 
+            RowBox[{"[", "i", "]"}], "]"}], "<>", "\"\<_rank.csv\>\""}], 
+          "]"}], "[", 
+         RowBox[{"[", 
+          RowBox[{"2", ";;"}], "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"Do", "[", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"fips", " ", "=", " ", 
+           RowBox[{"dat", "[", 
+            RowBox[{"[", 
+             RowBox[{"j", ",", "1"}], "]"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"pos", " ", "=", " ", 
+           RowBox[{
+            RowBox[{"Position", "[", 
+             RowBox[{"allFIPS", ",", "fips"}], "]"}], "[", 
+            RowBox[{"[", 
+             RowBox[{"1", ",", "1"}], "]"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"allrank", "[", 
+            RowBox[{"[", 
+             RowBox[{"pos", ",", 
+              RowBox[{"i", "+", "1"}]}], "]"}], "]"}], "=", " ", 
+           RowBox[{"dat", "[", 
+            RowBox[{"[", 
+             RowBox[{"j", ",", "2"}], "]"}], "]"}]}], ";"}], 
+         "\[IndentingNewLine]", ",", 
+         RowBox[{"{", 
+          RowBox[{"j", ",", 
+           RowBox[{"Length", "@", "dat"}]}], "}"}]}], "]"}], ";"}], 
+      "\[IndentingNewLine]", ",", 
+      RowBox[{"{", 
+       RowBox[{"i", ",", 
+        RowBox[{"Length", "@", "NAME"}]}], "}"}]}], "]"}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"PrependTo", "[", 
+     RowBox[{"allrank", ",", 
+      RowBox[{"Flatten", "[", 
+       RowBox[{"{", 
+        RowBox[{"\"\<FIPS\>\"", ",", "NAME"}], "}"}], "]"}]}], "]"}], ";"}], 
+   "\[IndentingNewLine]"}]}]], "Input",
+ CellChangeTimes->{{3.760133903181168*^9, 3.760133920236627*^9}, {
+   3.760134117746385*^9, 3.76013445411808*^9}, {3.760134486390259*^9, 
+   3.760134558770756*^9}, {3.7601345993115664`*^9, 3.760134605724264*^9}, 
+   3.760134657443643*^9, {3.7601346956188717`*^9, 3.7601347308454037`*^9}, {
+   3.760134761775076*^9, 3.760134847044615*^9}, {3.760175677178239*^9, 
+   3.760175749093108*^9}, {3.76018340477604*^9, 
+   3.760183405030195*^9}},ExpressionUUID->"e28fb4bf-4a03-4172-903e-\
+2c27a1a0f6ee"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Export", "[", 
+   RowBox[{
+   "\"\</Users/gola/Box \
+Sync/projects/ACES_ag_trends/data/clean/clean_allrank.csv\>\"", ",", 
+    "allrank"}], "]"}], ";"}]], "Input",
+ CellChangeTimes->{{3.760175769351248*^9, 
+  3.760175775478962*^9}},ExpressionUUID->"1f74dc25-d57a-4fec-a649-\
+b52ad1e9991f"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Recycle: Individual high and low scores", "Subsection",
+ CellChangeTimes->{{3.760183367357442*^9, 3.760183385530837*^9}, {
+  3.760183434391892*^9, 3.760183438318253*^9}, {3.76046763148885*^9, 
+  3.760467632804778*^9}},
+ Background->RGBColor[
+  1, 1, 0.85],ExpressionUUID->"3ef77cbb-cf0e-4821-85d5-3fc8f5b5c4e9"],
+
+Cell[CellGroupData[{
+
+Cell["Without mean yield at year 1994", "Subsubsection",
+ CellChangeTimes->{{3.760184610974647*^9, 
+  3.760184616620162*^9}},ExpressionUUID->"fff5e82c-0e79-40ae-8149-\
+334ae6404588"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+    "score", " ", "each", " ", "variable", " ", "with", " ", "1", " ", "if", 
+     " ", "it", " ", "is", " ", "below", " ", "th", " ", "10", "%", " ", 
+     "quantile", " ", "and", " ", "or", " ", "above", " ", "the", " ", "90", 
+     "%", " ", "quantile"}], ",", "  ", 
+    RowBox[{
+    "the", " ", "sum", " ", "of", " ", "the", " ", "scores", " ", "is", " ", 
+     "calculated", " ", "to", " ", "see", " ", "with", " ", "counties", " ", 
+     "are", " ", "the", " ", "worst", " ", "and", " ", "the", " ", "best"}]}],
+    " ", "*)"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"allFIPS", " ", "=", " ", 
+     RowBox[{"{", "}"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Do", "[", "\[IndentingNewLine]", 
+     RowBox[{"(*", " ", 
+      RowBox[{
+       RowBox[{"combine", " ", "all", " ", 
+        RowBox[{"variables", ":", " ", "slope"}]}], ",", " ", 
+       RowBox[{"acceleration", "/", "deceleration"}], ",", " ", 
+       RowBox[{"scaled", " ", "residuals"}], ",", " ", 
+       RowBox[{
+        RowBox[{"yield", " ", "gap", " ", "for", " ", "2008"}], "-", 
+        "2017"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"dat1", " ", "=", " ", 
+        RowBox[{
+         RowBox[{"Import", "[", 
+          RowBox[{
+          "\"\</Users/gola/Box Sync/projects/ACES_ag_trends/data/clean/clean_\
+\>\"", "<>", 
+           RowBox[{"NAME", "[", 
+            RowBox[{"[", "i", "]"}], "]"}], "<>", "\"\<_fit_coeff.csv\>\""}], 
+          "]"}], "[", 
+         RowBox[{"[", 
+          RowBox[{
+           RowBox[{"2", ";;", 
+            RowBox[{"-", "2"}]}], ",", 
+           RowBox[{"{", 
+            RowBox[{"1", ",", "3", ",", "5", ",", "9"}], "}"}]}], "]"}], 
+         "]"}]}], ";", " ", "\[IndentingNewLine]", 
+       RowBox[{"dat2", " ", "=", " ", 
+        RowBox[{
+         RowBox[{"Import", "[", 
+          RowBox[{
+          "\"\</Users/gola/Box Sync/projects/ACES_ag_trends/data/clean/clean_\
+\>\"", "<>", 
+           RowBox[{"NAME", "[", 
+            RowBox[{"[", "i", "]"}], "]"}], "<>", "\"\<_ygap.csv\>\""}], 
+          "]"}], "[", 
+         RowBox[{"[", 
+          RowBox[{
+           RowBox[{"2", ";;", 
+            RowBox[{"-", "2"}]}], ",", 
+           RowBox[{"{", 
+            RowBox[{"1", ",", "6"}], "}"}]}], "]"}], "]"}]}], ";", " ", 
+       "\[IndentingNewLine]", 
+       RowBox[{"dat3", " ", "=", " ", 
+        RowBox[{"Join", "[", 
+         RowBox[{"dat1", ",", 
+          RowBox[{"dat2", "[", 
+           RowBox[{"[", 
+            RowBox[{"All", ",", 
+             RowBox[{"{", 
+              RowBox[{"-", "1"}], "}"}]}], "]"}], "]"}], ",", "2"}], "]"}]}], 
+       ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
+        RowBox[{
+        "calculating", " ", "the", " ", "0.1", " ", "and", " ", "0.9", " ", 
+         "quantile", " ", "for", " ", "each", " ", "variable"}], " ", "*)"}], 
+       "\[IndentingNewLine]", 
+       RowBox[{"minq", " ", "=", " ", 
+        RowBox[{"maxq", " ", "=", " ", 
+         RowBox[{"{", "}"}]}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"Do", "[", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"dd", " ", "=", 
+           RowBox[{"Cases", "[", 
+            RowBox[{
+             RowBox[{"dat3", "[", 
+              RowBox[{"[", 
+               RowBox[{"All", ",", "i"}], "]"}], "]"}], ",", "_Real"}], 
+            "]"}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{"AppendTo", "[", " ", 
+           RowBox[{"minq", ",", " ", 
+            RowBox[{"Quantile", "[", 
+             RowBox[{"dd", ",", "0.1"}], "]"}]}], "]"}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"AppendTo", "[", 
+           RowBox[{"maxq", " ", ",", " ", 
+            RowBox[{"Quantile", "[", 
+             RowBox[{"dd", ",", "0.9"}], "]"}]}], "]"}], ";"}], 
+         "\[IndentingNewLine]", ",", 
+         RowBox[{"{", 
+          RowBox[{"i", ",", "2", ",", "5"}], "}"}]}], "]"}], ";", 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"newd", " ", "=", " ", 
+        RowBox[{"dat3", "[", 
+         RowBox[{"[", 
+          RowBox[{"All", ",", "1"}], "]"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"AppendTo", "[", 
+        RowBox[{"allFIPS", ",", " ", "newd"}], "]"}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"Do", "[", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"vect", " ", "=", " ", 
+           RowBox[{"dat3", "[", 
+            RowBox[{"[", 
+             RowBox[{"i", ",", 
+              RowBox[{"2", ";;"}]}], "]"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"(*", 
+           RowBox[{
+           "calculate", " ", "the", " ", "score", " ", "for", " ", "counties",
+             " ", "that", " ", "are", " ", "less", " ", "than", " ", "the", 
+            " ", "0.05", " ", "quantile"}], " ", "*)"}], 
+          "\[IndentingNewLine]", 
+          RowBox[{"resl", " ", "=", 
+           RowBox[{"ConstantArray", "[", 
+            RowBox[{"0", ",", "4"}], "]"}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"resl", "[", 
+            RowBox[{"[", "1", "]"}], "]"}], " ", "=", "  ", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"NumericQ", "[", 
+                RowBox[{"vect", "[", 
+                 RowBox[{"[", "1", "]"}], "]"}], "]"}], "\[Equal]", "True"}], 
+              " ", "&&", " ", 
+              RowBox[{
+               RowBox[{"vect", "[", 
+                RowBox[{"[", "1", "]"}], "]"}], " ", "\[LessEqual]", "  ", 
+               RowBox[{"minq", "[", 
+                RowBox[{"[", "1", "]"}], "]"}]}]}], ",", "1"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"resl", "[", 
+            RowBox[{"[", "2", "]"}], "]"}], " ", "=", "  ", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"NumericQ", "[", 
+                RowBox[{"vect", "[", 
+                 RowBox[{"[", "2", "]"}], "]"}], "]"}], "\[Equal]", "True"}], 
+              " ", "&&", 
+              RowBox[{
+               RowBox[{"vect", "[", 
+                RowBox[{"[", "2", "]"}], "]"}], " ", "\[LessEqual]", "  ", 
+               RowBox[{"minq", "[", 
+                RowBox[{"[", "2", "]"}], "]"}]}]}], ",", "1"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"resl", "[", 
+            RowBox[{"[", "3", "]"}], "]"}], " ", "=", "  ", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"NumericQ", "[", 
+                RowBox[{"vect", "[", 
+                 RowBox[{"[", "3", "]"}], "]"}], "]"}], "\[Equal]", "True"}], 
+              " ", "&&", " ", 
+              RowBox[{
+               RowBox[{"vect", "[", 
+                RowBox[{"[", "3", "]"}], "]"}], "\[GreaterEqual]", "   ", 
+               RowBox[{"maxq", "[", 
+                RowBox[{"[", "3", "]"}], "]"}]}]}], ",", "1"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"resl", "[", 
+            RowBox[{"[", "4", "]"}], "]"}], " ", "=", "  ", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"NumericQ", "[", 
+                RowBox[{"vect", "[", 
+                 RowBox[{"[", "4", "]"}], "]"}], "]"}], "\[Equal]", "True"}], 
+              " ", "&&", " ", 
+              RowBox[{
+               RowBox[{"vect", "[", 
+                RowBox[{"[", "4", "]"}], "]"}], "\[LessEqual]", "  ", 
+               RowBox[{"minq", "[", 
+                RowBox[{"[", "4", "]"}], "]"}]}]}], ",", "1"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", "\[IndentingNewLine]", 
+          RowBox[{"scorel", "=", " ", 
+           RowBox[{"Total", "[", 
+            RowBox[{"Cases", "[", 
+             RowBox[{"resl", ",", "_Integer"}], "]"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"AppendTo", "[", 
+           RowBox[{
+            RowBox[{"newd", "[", 
+             RowBox[{"[", 
+              RowBox[{"{", "i", "}"}], "]"}], "]"}], ",", "scorel"}], "]"}], 
+          ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+          RowBox[{"(*", 
+           RowBox[{
+           "calculate", " ", "the", " ", "score", " ", "for", " ", "counties",
+             " ", "that", " ", "are", " ", "more", " ", "than", " ", "the", 
+            " ", "0.95", " ", "quantile"}], " ", "*)"}], 
+          "\[IndentingNewLine]", 
+          RowBox[{"resm", " ", "=", 
+           RowBox[{"ConstantArray", "[", 
+            RowBox[{"0", ",", "4"}], "]"}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"resm", "[", 
+            RowBox[{"[", "1", "]"}], "]"}], " ", "=", "  ", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"NumericQ", "[", 
+                RowBox[{"vect", "[", 
+                 RowBox[{"[", "1", "]"}], "]"}], "]"}], "\[Equal]", "True"}], 
+              " ", "&&", " ", 
+              RowBox[{
+               RowBox[{"vect", "[", 
+                RowBox[{"[", "1", "]"}], "]"}], " ", "\[GreaterEqual]", "   ", 
+               RowBox[{"maxq", "[", 
+                RowBox[{"[", "1", "]"}], "]"}]}]}], ",", "1"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"resm", "[", 
+            RowBox[{"[", "2", "]"}], "]"}], " ", "=", "  ", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"NumericQ", "[", 
+                RowBox[{"vect", "[", 
+                 RowBox[{"[", "2", "]"}], "]"}], "]"}], "\[Equal]", "True"}], 
+              " ", "&&", " ", 
+              RowBox[{
+               RowBox[{"vect", "[", 
+                RowBox[{"[", "2", "]"}], "]"}], " ", "\[GreaterEqual]", "  ", 
+               
+               RowBox[{"maxq", "[", 
+                RowBox[{"[", "2", "]"}], "]"}]}]}], ",", "1"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"resm", "[", 
+            RowBox[{"[", "3", "]"}], "]"}], " ", "=", "  ", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"NumericQ", "[", 
+                RowBox[{"vect", "[", 
+                 RowBox[{"[", "3", "]"}], "]"}], "]"}], "\[Equal]", "True"}], 
+              " ", "&&", " ", 
+              RowBox[{
+               RowBox[{"vect", "[", 
+                RowBox[{"[", "3", "]"}], "]"}], " ", "\[LessEqual]", "  ", 
+               RowBox[{"minq", "[", 
+                RowBox[{"[", "3", "]"}], "]"}]}]}], ",", "1"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"resm", "[", 
+            RowBox[{"[", "4", "]"}], "]"}], " ", "=", "  ", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"NumericQ", "[", 
+                RowBox[{"vect", "[", 
+                 RowBox[{"[", "4", "]"}], "]"}], "]"}], "\[Equal]", "True"}], 
+              " ", "&&", " ", 
+              RowBox[{
+               RowBox[{"vect", "[", 
+                RowBox[{"[", "4", "]"}], "]"}], "\[GreaterEqual]", "  ", 
+               RowBox[{"maxq", "[", 
+                RowBox[{"[", "4", "]"}], "]"}]}]}], ",", "1"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", "\[IndentingNewLine]", 
+          RowBox[{"scorem", "=", " ", 
+           RowBox[{"Total", "[", 
+            RowBox[{"Cases", "[", 
+             RowBox[{"resm", ",", "_Integer"}], "]"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"AppendTo", "[", 
+           RowBox[{
+            RowBox[{"newd", "[", 
+             RowBox[{"[", "i", "]"}], "]"}], ",", "scorem"}], "]"}], ";"}], 
+         "\[IndentingNewLine]", ",", 
+         RowBox[{"{", 
+          RowBox[{"i", ",", " ", 
+           RowBox[{"Length", "@", "dat3"}]}], "}"}]}], "]"}], ";", 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"PrependTo", "[", 
+        RowBox[{"newd", ",", 
+         RowBox[{"{", 
+          RowBox[{
+          "\"\<FIPS\>\"", ",", "\"\<worstC\>\"", ",", "\"\<bestC\>\""}], 
+          "}"}]}], "]"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"Export", "[", 
+        RowBox[{
+         RowBox[{
+         "\"\</Users/gola/Box \
+Sync/projects/ACES_ag_trends/data/clean/clean_\>\"", "<>", 
+          RowBox[{"NAME", "[", 
+           RowBox[{"[", "i", "]"}], "]"}], "<>", "\"\<_score.csv\>\""}], ",", 
+         "newd"}], "]"}], ";"}], " ", "\[IndentingNewLine]", ",", 
+      RowBox[{"{", 
+       RowBox[{"i", ",", 
+        RowBox[{"Length", "@", "NAME"}]}], "}"}]}], "]"}], ";"}]}]}]], "Input",\
+
+ CellChangeTimes->{{3.760123627060195*^9, 3.7601236682306433`*^9}, {
+  3.760123915628693*^9, 3.76012391907045*^9}, {3.760123960502987*^9, 
+  3.7601239970849524`*^9}, {3.7601245994171667`*^9, 3.760124608431621*^9}, {
+  3.760124660048367*^9, 3.760124660486753*^9}, {3.760132021974144*^9, 
+  3.760132087265896*^9}, {3.7601334014672127`*^9, 3.760133433337716*^9}, {
+  3.760133511662588*^9, 3.7601336532721453`*^9}, {3.760133747556937*^9, 
+  3.760133752763249*^9}, {3.760133808015789*^9, 3.760133892090963*^9}, {
+  3.760134133547961*^9, 3.760134150322792*^9}, {3.7601463381184187`*^9, 
+  3.76014661056439*^9}, {3.760146686043971*^9, 3.7601466984417562`*^9}, {
+  3.760146763013785*^9, 
+  3.7601468317632627`*^9}},ExpressionUUID->"0f6c6a24-0fb7-443a-b173-\
+9cd3cf3b30a2"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"compile", " ", "the", " ", "score", " ", "data"}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"allFIPS", " ", "=", " ", 
+     RowBox[{"Union", "[", 
+      RowBox[{"Flatten", "@", "allFIPS"}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"scorelow", " ", "=", " ", 
+     RowBox[{"scorehigh", " ", "=", " ", 
+      RowBox[{"ConstantArray", "[", 
+       RowBox[{"\"\<NA\>\"", ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"Length", "@", "allFIPS"}], ",", "10"}], "}"}]}], "]"}]}]}],
+     ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"scorelow", "[", 
+      RowBox[{"[", 
+       RowBox[{"All", ",", "1"}], "]"}], "]"}], " ", "=", " ", 
+     RowBox[{
+      RowBox[{"scorehigh", "[", 
+       RowBox[{"[", 
+        RowBox[{"All", ",", "1"}], "]"}], "]"}], "=", " ", "allFIPS"}]}], 
+    ";"}], " ", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Do", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"dat", " ", "=", " ", 
+        RowBox[{
+         RowBox[{"Import", "[", 
+          RowBox[{
+          "\"\</Users/gola/Box Sync/projects/ACES_ag_trends/data/clean/clean_\
+\>\"", "<>", 
+           RowBox[{"NAME", "[", 
+            RowBox[{"[", "i", "]"}], "]"}], "<>", "\"\<_score.csv\>\""}], 
+          "]"}], "[", 
+         RowBox[{"[", 
+          RowBox[{"2", ";;"}], "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"Do", "[", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"fips", " ", "=", " ", 
+           RowBox[{"dat", "[", 
+            RowBox[{"[", 
+             RowBox[{"j", ",", "1"}], "]"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"pos", " ", "=", " ", 
+           RowBox[{
+            RowBox[{"Position", "[", 
+             RowBox[{"allFIPS", ",", "fips"}], "]"}], "[", 
+            RowBox[{"[", 
+             RowBox[{"1", ",", "1"}], "]"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"scorelow", "[", 
+            RowBox[{"[", 
+             RowBox[{"pos", ",", 
+              RowBox[{"i", "+", "1"}]}], "]"}], "]"}], "=", " ", 
+           RowBox[{"dat", "[", 
+            RowBox[{"[", 
+             RowBox[{"j", ",", "2"}], "]"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"scorehigh", "[", 
+            RowBox[{"[", 
+             RowBox[{"pos", ",", 
+              RowBox[{"i", "+", "1"}]}], "]"}], "]"}], "=", 
+           RowBox[{"dat", "[", 
+            RowBox[{"[", 
+             RowBox[{"j", ",", "3"}], "]"}], "]"}]}], ";"}], 
+         "\[IndentingNewLine]", ",", 
+         RowBox[{"{", 
+          RowBox[{"j", ",", 
+           RowBox[{"Length", "@", "dat"}]}], "}"}]}], "]"}], ";"}], 
+      "\[IndentingNewLine]", ",", 
+      RowBox[{"{", 
+       RowBox[{"i", ",", 
+        RowBox[{"Length", "@", "NAME"}]}], "}"}]}], "]"}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"PrependTo", "[", 
+     RowBox[{"scorelow", ",", 
+      RowBox[{"Flatten", "[", 
+       RowBox[{"{", 
+        RowBox[{"\"\<FIPS\>\"", ",", "NAME"}], "}"}], "]"}]}], "]"}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"PrependTo", "[", 
+     RowBox[{"scorehigh", ",", 
+      RowBox[{"Flatten", "[", 
+       RowBox[{"{", 
+        RowBox[{"\"\<FIPS\>\"", ",", "NAME"}], "}"}], "]"}]}], "]"}], ";"}], 
+   "\[IndentingNewLine]"}]}]], "Input",
+ CellChangeTimes->{{3.760133903181168*^9, 3.760133920236627*^9}, {
+   3.760134117746385*^9, 3.76013445411808*^9}, {3.760134486390259*^9, 
+   3.760134558770756*^9}, {3.7601345993115664`*^9, 3.760134605724264*^9}, 
+   3.760134657443643*^9, {3.7601346956188717`*^9, 3.7601347308454037`*^9}, {
+   3.760134761775076*^9, 
+   3.760134847044615*^9}},ExpressionUUID->"d9453221-81c1-4d7d-8ff6-\
+0ca79818cb5f"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Export", "[", 
+   RowBox[{
+   "\"\</Users/gola/Box \
+Sync/projects/ACES_ag_trends/data/clean/clean_lowscore.csv\>\"", ",", 
+    "scorelow"}], "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Export", "[", 
+   RowBox[{
+   "\"\</Users/gola/Box \
+Sync/projects/ACES_ag_trends/data/clean/clean_highscore.csv\>\"", ",", 
+    "scorehigh"}], "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.7601349986752*^9, 
+  3.760135021266964*^9}},ExpressionUUID->"2145051f-407a-40ac-a1a9-\
+a189bebd1402"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["With mean yield at year 1994", "Subsubsection",
+ CellChangeTimes->{{3.760184610974647*^9, 
+  3.760184624386694*^9}},ExpressionUUID->"62719b36-795c-46f5-aa55-\
+35b1e8f6bb4b"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+    "score", " ", "each", " ", "variable", " ", "with", " ", "1", " ", "if", 
+     " ", "it", " ", "is", " ", "below", " ", "th", " ", "10", "%", " ", 
+     "quantile", " ", "and", " ", "or", " ", "above", " ", "the", " ", "90", 
+     "%", " ", "quantile"}], ",", "  ", 
+    RowBox[{
+    "the", " ", "sum", " ", "of", " ", "the", " ", "scores", " ", "is", " ", 
+     "calculated", " ", "to", " ", "see", " ", "with", " ", "counties", " ", 
+     "are", " ", "the", " ", "worst", " ", "and", " ", "the", " ", "best"}]}],
+    " ", "*)"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"allFIPS", " ", "=", " ", 
+     RowBox[{"{", "}"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Do", "[", "\[IndentingNewLine]", 
+     RowBox[{"(*", " ", 
+      RowBox[{
+       RowBox[{"combine", " ", "all", " ", 
+        RowBox[{"variables", ":", " ", "slope"}]}], ",", " ", 
+       RowBox[{"acceleration", "/", "deceleration"}], ",", " ", 
+       RowBox[{"scaled", " ", "residuals"}], ",", " ", 
+       RowBox[{
+        RowBox[{"yield", " ", "gap", " ", "for", " ", "2008"}], "-", 
+        "2017"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{"dat0", " ", "=", " ", 
+         RowBox[{
+          RowBox[{"Import", "[", 
+           RowBox[{
+           "\"\</Users/gola/Box \
+Sync/projects/ACES_ag_trends/data/clean/clean_\>\"", "<>", 
+            RowBox[{"NAME", "[", 
+             RowBox[{"[", "i", "]"}], "]"}], "<>", "\"\<_pred_lin.csv\>\""}], 
+           "]"}], "[", 
+          RowBox[{"[", 
+           RowBox[{
+            RowBox[{"2", ";;", 
+             RowBox[{"-", "2"}]}], ",", 
+            RowBox[{"{", 
+             RowBox[{"1", ",", "3", ",", "5", ",", "9"}], "}"}]}], "]"}], 
+          "]"}]}], ";"}], " ", ";", "\[IndentingNewLine]", 
+       RowBox[{"dat1", " ", "=", " ", 
+        RowBox[{
+         RowBox[{"Import", "[", 
+          RowBox[{
+          "\"\</Users/gola/Box Sync/projects/ACES_ag_trends/data/clean/clean_\
+\>\"", "<>", 
+           RowBox[{"NAME", "[", 
+            RowBox[{"[", "i", "]"}], "]"}], "<>", "\"\<_fit_coeff.csv\>\""}], 
+          "]"}], "[", 
+         RowBox[{"[", 
+          RowBox[{
+           RowBox[{"2", ";;", 
+            RowBox[{"-", "2"}]}], ",", 
+           RowBox[{"{", 
+            RowBox[{"1", ",", "3", ",", "5", ",", "9"}], "}"}]}], "]"}], 
+         "]"}]}], ";", " ", "\[IndentingNewLine]", 
+       RowBox[{"dat2", " ", "=", " ", 
+        RowBox[{
+         RowBox[{"Import", "[", 
+          RowBox[{
+          "\"\</Users/gola/Box Sync/projects/ACES_ag_trends/data/clean/clean_\
+\>\"", "<>", 
+           RowBox[{"NAME", "[", 
+            RowBox[{"[", "i", "]"}], "]"}], "<>", "\"\<_ygap.csv\>\""}], 
+          "]"}], "[", 
+         RowBox[{"[", 
+          RowBox[{
+           RowBox[{"2", ";;", 
+            RowBox[{"-", "2"}]}], ",", 
+           RowBox[{"{", 
+            RowBox[{"1", ",", "6"}], "}"}]}], "]"}], "]"}]}], ";", " ", 
+       "\[IndentingNewLine]", 
+       RowBox[{"dat3", " ", "=", " ", 
+        RowBox[{"Join", "[", 
+         RowBox[{"dat1", ",", 
+          RowBox[{"dat2", "[", 
+           RowBox[{"[", 
+            RowBox[{"All", ",", 
+             RowBox[{"{", 
+              RowBox[{"-", "1"}], "}"}]}], "]"}], "]"}], ",", "2"}], "]"}]}], 
+       ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
+        RowBox[{
+        "calculating", " ", "the", " ", "0.1", " ", "and", " ", "0.9", " ", 
+         "quantile", " ", "for", " ", "each", " ", "variable"}], " ", "*)"}], 
+       "\[IndentingNewLine]", 
+       RowBox[{"minq", " ", "=", " ", 
+        RowBox[{"maxq", " ", "=", " ", 
+         RowBox[{"{", "}"}]}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"Do", "[", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"dd", " ", "=", 
+           RowBox[{"Cases", "[", 
+            RowBox[{
+             RowBox[{"dat3", "[", 
+              RowBox[{"[", 
+               RowBox[{"All", ",", "i"}], "]"}], "]"}], ",", "_Real"}], 
+            "]"}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{"AppendTo", "[", " ", 
+           RowBox[{"minq", ",", " ", 
+            RowBox[{"Quantile", "[", 
+             RowBox[{"dd", ",", "0.1"}], "]"}]}], "]"}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"AppendTo", "[", 
+           RowBox[{"maxq", " ", ",", " ", 
+            RowBox[{"Quantile", "[", 
+             RowBox[{"dd", ",", "0.9"}], "]"}]}], "]"}], ";"}], 
+         "\[IndentingNewLine]", ",", 
+         RowBox[{"{", 
+          RowBox[{"i", ",", "2", ",", "5"}], "}"}]}], "]"}], ";", 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"newd", " ", "=", " ", 
+        RowBox[{"dat3", "[", 
+         RowBox[{"[", 
+          RowBox[{"All", ",", "1"}], "]"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"AppendTo", "[", 
+        RowBox[{"allFIPS", ",", " ", "newd"}], "]"}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"Do", "[", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"vect", " ", "=", " ", 
+           RowBox[{"dat3", "[", 
+            RowBox[{"[", 
+             RowBox[{"i", ",", 
+              RowBox[{"2", ";;"}]}], "]"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"(*", 
+           RowBox[{
+           "calculate", " ", "the", " ", "score", " ", "for", " ", "counties",
+             " ", "that", " ", "are", " ", "less", " ", "than", " ", "the", 
+            " ", "0.05", " ", "quantile"}], " ", "*)"}], 
+          "\[IndentingNewLine]", 
+          RowBox[{"resl", " ", "=", 
+           RowBox[{"ConstantArray", "[", 
+            RowBox[{"0", ",", "4"}], "]"}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"resl", "[", 
+            RowBox[{"[", "1", "]"}], "]"}], " ", "=", "  ", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"NumericQ", "[", 
+                RowBox[{"vect", "[", 
+                 RowBox[{"[", "1", "]"}], "]"}], "]"}], "\[Equal]", "True"}], 
+              " ", "&&", " ", 
+              RowBox[{
+               RowBox[{"vect", "[", 
+                RowBox[{"[", "1", "]"}], "]"}], " ", "\[LessEqual]", "  ", 
+               RowBox[{"minq", "[", 
+                RowBox[{"[", "1", "]"}], "]"}]}]}], ",", "1"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"resl", "[", 
+            RowBox[{"[", "2", "]"}], "]"}], " ", "=", "  ", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"NumericQ", "[", 
+                RowBox[{"vect", "[", 
+                 RowBox[{"[", "2", "]"}], "]"}], "]"}], "\[Equal]", "True"}], 
+              " ", "&&", 
+              RowBox[{
+               RowBox[{"vect", "[", 
+                RowBox[{"[", "2", "]"}], "]"}], " ", "\[LessEqual]", "  ", 
+               RowBox[{"minq", "[", 
+                RowBox[{"[", "2", "]"}], "]"}]}]}], ",", "1"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"resl", "[", 
+            RowBox[{"[", "3", "]"}], "]"}], " ", "=", "  ", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"NumericQ", "[", 
+                RowBox[{"vect", "[", 
+                 RowBox[{"[", "3", "]"}], "]"}], "]"}], "\[Equal]", "True"}], 
+              " ", "&&", " ", 
+              RowBox[{
+               RowBox[{"vect", "[", 
+                RowBox[{"[", "3", "]"}], "]"}], "\[GreaterEqual]", "   ", 
+               RowBox[{"maxq", "[", 
+                RowBox[{"[", "3", "]"}], "]"}]}]}], ",", "1"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"resl", "[", 
+            RowBox[{"[", "4", "]"}], "]"}], " ", "=", "  ", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"NumericQ", "[", 
+                RowBox[{"vect", "[", 
+                 RowBox[{"[", "4", "]"}], "]"}], "]"}], "\[Equal]", "True"}], 
+              " ", "&&", " ", 
+              RowBox[{
+               RowBox[{"vect", "[", 
+                RowBox[{"[", "4", "]"}], "]"}], "\[LessEqual]", "  ", 
+               RowBox[{"minq", "[", 
+                RowBox[{"[", "4", "]"}], "]"}]}]}], ",", "1"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", "\[IndentingNewLine]", 
+          RowBox[{"scorel", "=", " ", 
+           RowBox[{"Total", "[", 
+            RowBox[{"Cases", "[", 
+             RowBox[{"resl", ",", "_Integer"}], "]"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"AppendTo", "[", 
+           RowBox[{
+            RowBox[{"newd", "[", 
+             RowBox[{"[", 
+              RowBox[{"{", "i", "}"}], "]"}], "]"}], ",", "scorel"}], "]"}], 
+          ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+          RowBox[{"(*", 
+           RowBox[{
+           "calculate", " ", "the", " ", "score", " ", "for", " ", "counties",
+             " ", "that", " ", "are", " ", "more", " ", "than", " ", "the", 
+            " ", "0.95", " ", "quantile"}], " ", "*)"}], 
+          "\[IndentingNewLine]", 
+          RowBox[{"resm", " ", "=", 
+           RowBox[{"ConstantArray", "[", 
+            RowBox[{"0", ",", "4"}], "]"}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"resm", "[", 
+            RowBox[{"[", "1", "]"}], "]"}], " ", "=", "  ", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"NumericQ", "[", 
+                RowBox[{"vect", "[", 
+                 RowBox[{"[", "1", "]"}], "]"}], "]"}], "\[Equal]", "True"}], 
+              " ", "&&", " ", 
+              RowBox[{
+               RowBox[{"vect", "[", 
+                RowBox[{"[", "1", "]"}], "]"}], " ", "\[GreaterEqual]", "   ", 
+               RowBox[{"maxq", "[", 
+                RowBox[{"[", "1", "]"}], "]"}]}]}], ",", "1"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"resm", "[", 
+            RowBox[{"[", "2", "]"}], "]"}], " ", "=", "  ", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"NumericQ", "[", 
+                RowBox[{"vect", "[", 
+                 RowBox[{"[", "2", "]"}], "]"}], "]"}], "\[Equal]", "True"}], 
+              " ", "&&", " ", 
+              RowBox[{
+               RowBox[{"vect", "[", 
+                RowBox[{"[", "2", "]"}], "]"}], " ", "\[GreaterEqual]", "  ", 
+               
+               RowBox[{"maxq", "[", 
+                RowBox[{"[", "2", "]"}], "]"}]}]}], ",", "1"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"resm", "[", 
+            RowBox[{"[", "3", "]"}], "]"}], " ", "=", "  ", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"NumericQ", "[", 
+                RowBox[{"vect", "[", 
+                 RowBox[{"[", "3", "]"}], "]"}], "]"}], "\[Equal]", "True"}], 
+              " ", "&&", " ", 
+              RowBox[{
+               RowBox[{"vect", "[", 
+                RowBox[{"[", "3", "]"}], "]"}], " ", "\[LessEqual]", "  ", 
+               RowBox[{"minq", "[", 
+                RowBox[{"[", "3", "]"}], "]"}]}]}], ",", "1"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"resm", "[", 
+            RowBox[{"[", "4", "]"}], "]"}], " ", "=", "  ", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"NumericQ", "[", 
+                RowBox[{"vect", "[", 
+                 RowBox[{"[", "4", "]"}], "]"}], "]"}], "\[Equal]", "True"}], 
+              " ", "&&", " ", 
+              RowBox[{
+               RowBox[{"vect", "[", 
+                RowBox[{"[", "4", "]"}], "]"}], "\[GreaterEqual]", "  ", 
+               RowBox[{"maxq", "[", 
+                RowBox[{"[", "4", "]"}], "]"}]}]}], ",", "1"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", "\[IndentingNewLine]", 
+          RowBox[{"scorem", "=", " ", 
+           RowBox[{"Total", "[", 
+            RowBox[{"Cases", "[", 
+             RowBox[{"resm", ",", "_Integer"}], "]"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"AppendTo", "[", 
+           RowBox[{
+            RowBox[{"newd", "[", 
+             RowBox[{"[", "i", "]"}], "]"}], ",", "scorem"}], "]"}], ";"}], 
+         "\[IndentingNewLine]", ",", 
+         RowBox[{"{", 
+          RowBox[{"i", ",", " ", 
+           RowBox[{"Length", "@", "dat3"}]}], "}"}]}], "]"}], ";", 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"PrependTo", "[", 
+        RowBox[{"newd", ",", 
+         RowBox[{"{", 
+          RowBox[{
+          "\"\<FIPS\>\"", ",", "\"\<worstC\>\"", ",", "\"\<bestC\>\""}], 
+          "}"}]}], "]"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"Export", "[", 
+        RowBox[{
+         RowBox[{
+         "\"\</Users/gola/Box \
+Sync/projects/ACES_ag_trends/data/clean/clean_\>\"", "<>", 
+          RowBox[{"NAME", "[", 
+           RowBox[{"[", "i", "]"}], "]"}], "<>", "\"\<_score.csv\>\""}], ",", 
+         "newd"}], "]"}], ";"}], " ", "\[IndentingNewLine]", ",", 
+      RowBox[{"{", 
+       RowBox[{"i", ",", 
+        RowBox[{"Length", "@", "NAME"}]}], "}"}]}], "]"}], ";"}]}]}]], "Input",\
+
+ CellChangeTimes->{{3.760123627060195*^9, 3.7601236682306433`*^9}, {
+  3.760123915628693*^9, 3.76012391907045*^9}, {3.760123960502987*^9, 
+  3.7601239970849524`*^9}, {3.7601245994171667`*^9, 3.760124608431621*^9}, {
+  3.760124660048367*^9, 3.760124660486753*^9}, {3.760132021974144*^9, 
+  3.760132087265896*^9}, {3.7601334014672127`*^9, 3.760133433337716*^9}, {
+  3.760133511662588*^9, 3.7601336532721453`*^9}, {3.760133747556937*^9, 
+  3.760133752763249*^9}, {3.760133808015789*^9, 3.760133892090963*^9}, {
+  3.760134133547961*^9, 3.760134150322792*^9}, {3.7601463381184187`*^9, 
+  3.76014661056439*^9}, {3.760146686043971*^9, 3.7601466984417562`*^9}, {
+  3.760146763013785*^9, 3.7601468317632627`*^9}, {3.760184636356505*^9, 
+  3.7601846605840673`*^9}},ExpressionUUID->"e039b18d-fc02-4235-a7a7-\
+864aa756580f"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"compile", " ", "the", " ", "score", " ", "data"}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"allFIPS", " ", "=", " ", 
+     RowBox[{"Union", "[", 
+      RowBox[{"Flatten", "@", "allFIPS"}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"scorelow", " ", "=", " ", 
+     RowBox[{"scorehigh", " ", "=", " ", 
+      RowBox[{"ConstantArray", "[", 
+       RowBox[{"\"\<NA\>\"", ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"Length", "@", "allFIPS"}], ",", "10"}], "}"}]}], "]"}]}]}],
+     ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"scorelow", "[", 
+      RowBox[{"[", 
+       RowBox[{"All", ",", "1"}], "]"}], "]"}], " ", "=", " ", 
+     RowBox[{
+      RowBox[{"scorehigh", "[", 
+       RowBox[{"[", 
+        RowBox[{"All", ",", "1"}], "]"}], "]"}], "=", " ", "allFIPS"}]}], 
+    ";"}], " ", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Do", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"dat", " ", "=", " ", 
+        RowBox[{
+         RowBox[{"Import", "[", 
+          RowBox[{
+          "\"\</Users/gola/Box Sync/projects/ACES_ag_trends/data/clean/clean_\
+\>\"", "<>", 
+           RowBox[{"NAME", "[", 
+            RowBox[{"[", "i", "]"}], "]"}], "<>", "\"\<_score.csv\>\""}], 
+          "]"}], "[", 
+         RowBox[{"[", 
+          RowBox[{"2", ";;"}], "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"Do", "[", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"fips", " ", "=", " ", 
+           RowBox[{"dat", "[", 
+            RowBox[{"[", 
+             RowBox[{"j", ",", "1"}], "]"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"pos", " ", "=", " ", 
+           RowBox[{
+            RowBox[{"Position", "[", 
+             RowBox[{"allFIPS", ",", "fips"}], "]"}], "[", 
+            RowBox[{"[", 
+             RowBox[{"1", ",", "1"}], "]"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"scorelow", "[", 
+            RowBox[{"[", 
+             RowBox[{"pos", ",", 
+              RowBox[{"i", "+", "1"}]}], "]"}], "]"}], "=", " ", 
+           RowBox[{"dat", "[", 
+            RowBox[{"[", 
+             RowBox[{"j", ",", "2"}], "]"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"scorehigh", "[", 
+            RowBox[{"[", 
+             RowBox[{"pos", ",", 
+              RowBox[{"i", "+", "1"}]}], "]"}], "]"}], "=", 
+           RowBox[{"dat", "[", 
+            RowBox[{"[", 
+             RowBox[{"j", ",", "3"}], "]"}], "]"}]}], ";"}], 
+         "\[IndentingNewLine]", ",", 
+         RowBox[{"{", 
+          RowBox[{"j", ",", 
+           RowBox[{"Length", "@", "dat"}]}], "}"}]}], "]"}], ";"}], 
+      "\[IndentingNewLine]", ",", 
+      RowBox[{"{", 
+       RowBox[{"i", ",", 
+        RowBox[{"Length", "@", "NAME"}]}], "}"}]}], "]"}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"PrependTo", "[", 
+     RowBox[{"scorelow", ",", 
+      RowBox[{"Flatten", "[", 
+       RowBox[{"{", 
+        RowBox[{"\"\<FIPS\>\"", ",", "NAME"}], "}"}], "]"}]}], "]"}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"PrependTo", "[", 
+     RowBox[{"scorehigh", ",", 
+      RowBox[{"Flatten", "[", 
+       RowBox[{"{", 
+        RowBox[{"\"\<FIPS\>\"", ",", "NAME"}], "}"}], "]"}]}], "]"}], ";"}], 
+   "\[IndentingNewLine]"}]}]], "Input",
+ CellChangeTimes->{{3.760133903181168*^9, 3.760133920236627*^9}, {
+   3.760134117746385*^9, 3.76013445411808*^9}, {3.760134486390259*^9, 
+   3.760134558770756*^9}, {3.7601345993115664`*^9, 3.760134605724264*^9}, 
+   3.760134657443643*^9, {3.7601346956188717`*^9, 3.7601347308454037`*^9}, {
+   3.760134761775076*^9, 
+   3.760134847044615*^9}},ExpressionUUID->"f609c091-7824-4c63-892c-\
+285ea4fa481d"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Export", "[", 
+   RowBox[{
+   "\"\</Users/gola/Box \
+Sync/projects/ACES_ag_trends/data/clean/clean_lowscore.csv\>\"", ",", 
+    "scorelow"}], "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Export", "[", 
+   RowBox[{
+   "\"\</Users/gola/Box \
+Sync/projects/ACES_ag_trends/data/clean/clean_highscore.csv\>\"", ",", 
+    "scorehigh"}], "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.7601349986752*^9, 
+  3.760135021266964*^9}},ExpressionUUID->"6865cb9b-59f7-4ad2-b2db-\
+00ef0af286a7"]
+}, Closed]]
+}, Closed]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
 Cell["Metadata", "Section",
  CellChangeTimes->{{3.738756755416654*^9, 3.738756757091955*^9}},
  Background->RGBColor[
@@ -38830,13 +40912,14 @@ Cell[BoxData[
            RowBox[{"1", ",", "1"}], "]"}], "]"}]}], ";", 
         "\[IndentingNewLine]", 
         RowBox[{"result", " ", "=", " ", "pos"}], ";", "\[IndentingNewLine]", 
-        "result"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", "\n", 
+        "result"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
    RowBox[{"(*", " ", 
     RowBox[{
     "Find", " ", "the", " ", "position", " ", "of", " ", "a", " ", "certain", 
      " ", "value", " ", "according", " ", "to", " ", "a", " ", "function", 
      " ", "Fun_", " ", "in", " ", "the", " ", "matrix", " ", "dat_"}], " ", 
-    "*)"}], "\[IndentingNewLine]", 
+    "*)"}], "\n", 
    RowBox[{
     RowBox[{
      RowBox[{"FindPositionMat", "[", 
@@ -44075,10 +46158,10 @@ Sync/projects/ACES_ag_trends/data/clean/metadata.m\"\>"], "Output",
   3.741455973225046*^9},ExpressionUUID->"33cbd907-5c19-417b-a71b-\
 234e0023ad15"]
 }, Open  ]]
-}, Open  ]]
+}, Closed]]
 },
-WindowSize->{1280, 755},
-WindowMargins->{{0, Automatic}, {Automatic, 0}},
+WindowSize->{1920, 1155},
+WindowMargins->{{-291, Automatic}, {799, Automatic}},
 FrontEndVersion->"11.2 for Mac OS X x86 (32-bit, 64-bit Kernel) (September \
 10, 2017)",
 StyleDefinitions->"Default.nb"
@@ -44105,7 +46188,7 @@ Cell[12457, 287, 391, 9, 30, "Input",ExpressionUUID->"2abfca52-bcc1-4f8d-a3d7-3d
 Cell[12851, 298, 200, 4, 34, "Output",ExpressionUUID->"0817627a-3a20-4b12-926c-9a1f020d195b"]
 }, Open  ]],
 Cell[13066, 305, 465, 13, 30, "Input",ExpressionUUID->"a9cbf54d-5ca1-485d-81d9-30de499dc026"],
-Cell[13534, 320, 909, 21, 73, "Input",ExpressionUUID->"47f5712c-b8ea-4ea6-b7eb-623e64ac9350"],
+Cell[13534, 320, 909, 21, 52, "Input",ExpressionUUID->"47f5712c-b8ea-4ea6-b7eb-623e64ac9350"],
 Cell[CellGroupData[{
 Cell[14468, 345, 278, 4, 71, "Section",ExpressionUUID->"a6bc4946-4d58-4fe8-b07c-a792e1d4737c"],
 Cell[CellGroupData[{
@@ -44116,13 +46199,13 @@ Cell[19639, 502, 11087, 249, 829, "Input",ExpressionUUID->"e5a6baf9-c8ea-4ec0-81
 }, Open  ]],
 Cell[CellGroupData[{
 Cell[30763, 756, 340, 5, 70, "Subsection",ExpressionUUID->"ad5de50d-7ca3-4798-96dc-938e7d921013"],
-Cell[31106, 763, 4110, 124, 409, "Input",ExpressionUUID->"5c9a3a91-5329-46e4-8a7f-f3cbd6f0d47c"],
-Cell[35219, 889, 10199, 228, 766, "Input",ExpressionUUID->"a1009ebe-0af4-4289-9fcf-2d73eb7ce80e"]
+Cell[31106, 763, 4110, 124, 409, "Input",ExpressionUUID->"67a4f466-215e-43c7-b145-1e10b065173e"],
+Cell[35219, 889, 10199, 228, 766, "Input",ExpressionUUID->"4f6ec2e2-1a77-454b-ad37-7ccbdae56fdb"]
 }, Closed]],
 Cell[CellGroupData[{
 Cell[45455, 1122, 450, 7, 54, "Subsection",ExpressionUUID->"7a9e35a0-26f8-422a-8ed7-4bc5338c3efd"],
-Cell[45908, 1131, 3888, 127, 430, "Input",ExpressionUUID->"e32553a7-2190-4574-b03b-e821d7c1c790"],
-Cell[49799, 1260, 10208, 228, 766, "Input",ExpressionUUID->"9a14a686-375a-4080-b213-916b856a7268"]
+Cell[45908, 1131, 3888, 127, 430, "Input",ExpressionUUID->"118ceadd-9227-4074-bd89-8ffbbf1ab73b"],
+Cell[49799, 1260, 10208, 228, 766, "Input",ExpressionUUID->"59f7efae-2107-4869-80e8-8b98c3492484"]
 }, Closed]]
 }, Closed]],
 Cell[CellGroupData[{
@@ -44352,19 +46435,49 @@ Cell[1826510, 38678, 3097, 98, 153, "Output",ExpressionUUID->"85f2a4b8-3f49-4a52
 }, Closed]]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[1829668, 38783, 185, 3, 57, "Section",ExpressionUUID->"828294ff-7031-4fa5-b3f4-4c29eecb5f70"],
-Cell[1829856, 38788, 4035, 94, 425, "Input",ExpressionUUID->"54a91287-791f-4974-af19-aae78fdbbd5b",
- InitializationCell->True],
-Cell[1833894, 38884, 18768, 472, 1564, "Input",ExpressionUUID->"c4fddb9d-57bd-438e-8fbe-15cc87ae0370"],
+Cell[1829668, 38783, 255, 4, 57, "Section",ExpressionUUID->"4c65266c-49a2-4f9e-8107-4d4149e1686c"],
 Cell[CellGroupData[{
-Cell[1852687, 39360, 489, 10, 30, "Input",ExpressionUUID->"6091c794-d2ad-4ff8-9d24-47edd7ab62f8"],
-Cell[1853179, 39372, 228222, 4683, 485, "Output",ExpressionUUID->"144e90ad-627e-4635-91af-31de652cc2c2"]
+Cell[1829948, 38791, 256, 4, 70, "Subsection",ExpressionUUID->"6c2508d7-637f-4aac-bd25-e4f825fc9361"],
+Cell[1830207, 38797, 20123, 478, 1228, "Input",ExpressionUUID->"bc341ab4-5026-41e8-805f-d92c34b42970"],
+Cell[1850333, 39277, 5033, 134, 367, "Input",ExpressionUUID->"53089744-b471-40fe-8f06-389fbb571d94"],
+Cell[1855369, 39413, 882, 23, 73, "Input",ExpressionUUID->"2584bf49-4baa-4c23-a940-0b192d2c0e40"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[2081438, 44060, 291, 8, 30, "Input",ExpressionUUID->"a95fd1b5-095c-4516-9551-c9d0b8e238b2"],
-Cell[2081732, 44070, 276, 5, 34, "Output",ExpressionUUID->"33cbd907-5c19-417b-a71b-234e0023ad15"]
+Cell[1856288, 39441, 247, 4, 70, "Subsection",ExpressionUUID->"1cef12b4-98c1-4bc6-9d6c-e59c378c4edf"],
+Cell[1856538, 39447, 14974, 358, 1396, "Input",ExpressionUUID->"676dbb3c-0a80-4b11-b5c6-f8b0d65541c5"],
+Cell[1871515, 39807, 3235, 86, 304, "Input",ExpressionUUID->"e28fb4bf-4a03-4172-903e-2c27a1a0f6ee"],
+Cell[1874753, 39895, 324, 9, 30, "Input",ExpressionUUID->"1f74dc25-d57a-4fec-a649-b52ad1e9991f"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[1875114, 39909, 317, 5, 54, "Subsection",ExpressionUUID->"3ef77cbb-cf0e-4821-85d5-3fc8f5b5c4e9"],
+Cell[CellGroupData[{
+Cell[1875456, 39918, 182, 3, 45, "Subsubsection",ExpressionUUID->"fff5e82c-0e79-40ae-8149-334ae6404588"],
+Cell[1875641, 39923, 13687, 329, 976, "Input",ExpressionUUID->"0f6c6a24-0fb7-443a-b173-9cd3cf3b30a2"],
+Cell[1889331, 40254, 3887, 106, 346, "Input",ExpressionUUID->"d9453221-81c1-4d7d-8ff6-0ca79818cb5f"],
+Cell[1893221, 40362, 529, 15, 52, "Input",ExpressionUUID->"2145051f-407a-40ac-a1a9-a189bebd1402"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[1893787, 40382, 179, 3, 37, "Subsubsection",ExpressionUUID->"62719b36-795c-46f5-aa55-35b1e8f6bb4b"],
+Cell[1893969, 40387, 14372, 346, 997, "Input",ExpressionUUID->"e039b18d-fc02-4235-a7a7-864aa756580f"],
+Cell[1908344, 40735, 3887, 106, 346, "Input",ExpressionUUID->"f609c091-7824-4c63-892c-285ea4fa481d"],
+Cell[1912234, 40843, 529, 15, 52, "Input",ExpressionUUID->"6865cb9b-59f7-4ad2-b2db-00ef0af286a7"]
+}, Closed]]
+}, Closed]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[1912824, 40865, 185, 3, 71, "Section",ExpressionUUID->"828294ff-7031-4fa5-b3f4-4c29eecb5f70"],
+Cell[1913012, 40870, 4039, 95, 425, "Input",ExpressionUUID->"54a91287-791f-4974-af19-aae78fdbbd5b",
+ InitializationCell->True],
+Cell[1917054, 40967, 18768, 472, 1564, "Input",ExpressionUUID->"c4fddb9d-57bd-438e-8fbe-15cc87ae0370"],
+Cell[CellGroupData[{
+Cell[1935847, 41443, 489, 10, 30, "Input",ExpressionUUID->"6091c794-d2ad-4ff8-9d24-47edd7ab62f8"],
+Cell[1936339, 41455, 228222, 4683, 485, "Output",ExpressionUUID->"144e90ad-627e-4635-91af-31de652cc2c2"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2164598, 46143, 291, 8, 30, "Input",ExpressionUUID->"a95fd1b5-095c-4516-9551-c9d0b8e238b2"],
+Cell[2164892, 46153, 276, 5, 34, "Output",ExpressionUUID->"33cbd907-5c19-417b-a71b-234e0023ad15"]
 }, Open  ]]
-}, Open  ]]
+}, Closed]]
 }
 ]
 *)
